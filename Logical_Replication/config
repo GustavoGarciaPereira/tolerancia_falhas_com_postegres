@@ -1,0 +1,42 @@
+-- Connect to the publisher
+docker exec -it pg-publisher psql -U postgres
+
+-- Enable logical replication
+ALTER SYSTEM SET wal_level = 'logical';
+
+-- Create a publication
+CREATE TABLE test_table (id INT PRIMARY KEY, info TEXT);
+CREATE PUBLICATION my_publication FOR ALL TABLES;
+
+
+docker exec -it pg-publisher psql -U postgres
+
+-- Set wal_level to logical
+ALTER SYSTEM SET wal_level = 'logical';
+
+-- Exit psql and restart the PostgreSQL container
+\q
+
+
+-- Connect to the subscriber
+docker exec -it pg-subscriber psql -U postgres
+
+-- Create a subscription
+CREATE SUBSCRIPTION my_subscription CONNECTION 'dbname=postgres host=pg-publisher user=postgres password=mysecretpassword' PUBLICATION my_publication;
+
+
+
+
+
+
+
+docker exec -it pg-publisher psql -U postgres
+-- Insert data in the publisher
+CREATE TABLE test_table (id INT PRIMARY KEY, info TEXT); INSERT INTO test_table VALUES (1, 'Data replicated');
+
+
+
+
+docker exec -it pg-subscriber psql -U postgres
+-- Check data in the subscriber
+SELECT * FROM test_table;

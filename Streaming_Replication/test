@@ -1,0 +1,12 @@
+docker exec -it streaming_replication_postgres_primary_1 psql -U user -d postgres -c "CREATE TABLE test_replication (id INT PRIMARY KEY, info TEXT); INSERT INTO test_replication VALUES (1, 'Replication is working');"
+docker exec -it streaming_replication_postgres_primary_1 psql -U user -d postgres -c "SELECT * FROM test_replication;"
+
+
+
+
+
+
+
+
+
+docker exec -it streaming_replication_postgres_replica_1 psql -U user -d postgres -c "SELECT * FROM test_replication;"
