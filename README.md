@@ -32,7 +32,7 @@ Para executar este projeto, você precisará ter o Docker e o Docker Compose ins
 
 
 
-4. (Incluir mais instruções conforme necessário para interação com o sistema ou execução de testes.)
+4. docker-compose up
 
 ## Contribuições
 
