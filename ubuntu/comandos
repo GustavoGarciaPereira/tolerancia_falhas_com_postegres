@@ -1,0 +1,4 @@
+docker build -t meu-ubuntu .
+
+
+docker run -it meu-ubuntu
